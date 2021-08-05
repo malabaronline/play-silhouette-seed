@@ -1,11 +1,12 @@
 package controllers
 
-import com.mohiva.play.silhouette.api.actions.{ SecuredActionBuilder, UnsecuredActionBuilder }
+import com.mohiva.play.silhouette.api.actions.{ SecuredActionBuilder, UnsecuredActionBuilder, UserAwareActionBuilder }
 import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.api.services.{ AuthenticatorService, AvatarService }
 import com.mohiva.play.silhouette.api.util.{ Clock, PasswordHasherRegistry }
 import com.mohiva.play.silhouette.api.{ EventBus, Silhouette }
 import com.mohiva.play.silhouette.impl.providers.{ CredentialsProvider, GoogleTotpProvider, SocialProviderRegistry }
+
 import javax.inject.Inject
 import models.services.{ AuthTokenService, UserService }
 import play.api.Logging
@@ -21,6 +22,7 @@ abstract class SilhouetteController(override protected val controllerComponents:
   extends MessagesAbstractController(controllerComponents) with SilhouetteComponents with I18nSupport with Logging {
 
   def SecuredAction: SecuredActionBuilder[EnvType, AnyContent] = controllerComponents.silhouette.SecuredAction
+  def UserAwareAction: UserAwareActionBuilder[EnvType, AnyContent] = controllerComponents.silhouette.UserAwareAction
   def UnsecuredAction: UnsecuredActionBuilder[EnvType, AnyContent] = controllerComponents.silhouette.UnsecuredAction
 
   def userService: UserService = controllerComponents.userService

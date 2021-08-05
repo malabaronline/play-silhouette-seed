@@ -16,9 +16,6 @@ class AuthTokenDAOImpl extends AuthTokenDAO {
 
   /**
    * Finds a token by its ID.
-   *
-   * @param id The unique token ID.
-   * @return The found token or None if no token for the given ID could be found.
    */
   def find(id: UUID) = Future.successful(tokens.get(id))
 
@@ -61,6 +58,8 @@ class AuthTokenDAOImpl extends AuthTokenDAO {
  * The companion object.
  */
 object AuthTokenDAOImpl {
+
+  private val authTokenKey: String = "online.malabar.services.auth.auth-token"
 
   /**
    * The list of tokens.

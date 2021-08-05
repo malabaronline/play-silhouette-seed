@@ -41,7 +41,7 @@ class ChangePasswordController @Inject() (
         form => Future.successful(BadRequest(changePassword(form, request.identity))),
         password => {
           val (currentPassword, newPassword) = password
-          val credentials = Credentials(request.identity.email.getOrElse(""), currentPassword)
+          val credentials = Credentials(request.identity.email, currentPassword)
           credentialsProvider.authenticate(credentials).flatMap { loginInfo =>
             val passwordInfo = passwordHasherRegistry.current.hash(newPassword)
             authInfoRepository.update[PasswordInfo](loginInfo, passwordInfo).map { _ =>

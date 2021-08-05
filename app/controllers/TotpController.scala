@@ -34,11 +34,11 @@ class TotpController @Inject() (
    */
   def enableTotp = SecuredAction.async { implicit request =>
     val user = request.identity
-    val credentials = totpProvider.createCredentials(user.email.get)
+    val credentials = totpProvider.createCredentials(user.email)
     val totpInfo = credentials.totpInfo
     val formData = TotpSetupForm.form.fill(TotpSetupForm.Data(totpInfo.sharedKey, totpInfo.scratchCodes, credentials.scratchCodesPlain))
     authInfoRepository.find[GoogleTotpInfo](request.identity.loginInfo).map { totpInfoOpt =>
-      Ok(home(user, totpInfoOpt, Some((formData, credentials))))
+      Ok(home(Some(user), totpInfoOpt, Some((formData, credentials))))
     }
   }
 
@@ -60,7 +60,7 @@ class TotpController @Inject() (
     val user = request.identity
     TotpSetupForm.form.bindFromRequest.fold(
       form => authInfoRepository.find[GoogleTotpInfo](request.identity.loginInfo).map { totpInfoOpt =>
-        BadRequest(home(user, totpInfoOpt))
+        BadRequest(home(Some(user), totpInfoOpt))
       },
       data => {
         totpProvider.authenticate(data.sharedKey, data.verificationCode).flatMap {

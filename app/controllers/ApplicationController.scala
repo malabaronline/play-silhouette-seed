@@ -22,10 +22,8 @@ class ApplicationController @Inject() (
    *
    * @return The result to display.
    */
-  def index = SecuredAction.async { implicit request: SecuredRequest[EnvType, AnyContent] =>
-    authInfoRepository.find[GoogleTotpInfo](request.identity.loginInfo).map { totpInfoOpt =>
-      Ok(home(request.identity, totpInfoOpt))
-    }
+  def index: Action[AnyContent] = UserAwareAction { implicit request: UserAwareRequest[EnvType, AnyContent] =>
+    Ok(home(request.identity, None))
   }
 
   /**
@@ -33,7 +31,7 @@ class ApplicationController @Inject() (
    *
    * @return The result to display.
    */
-  def signOut = SecuredAction.async { implicit request: SecuredRequest[EnvType, AnyContent] =>
+  def signOut: Action[AnyContent] = SecuredAction.async { implicit request: SecuredRequest[EnvType, AnyContent] =>
     val result = Redirect(Calls.home)
     eventBus.publish(LogoutEvent(request.identity, request))
     authenticatorService.discard(request.authenticator, result)
