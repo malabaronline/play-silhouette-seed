@@ -11,78 +11,225 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="A product to make payment easier.">
         <link rel="shortcut icon" type="image/png" href="@assets.path("images/favicon.png")">
         <title>@title</title>
-        <link @{CSPNonce.attr} href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
-        <link @{CSPNonce.attr} href="//cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
-        @webJarsUtil.locate("bootstrap.min.css").css(CSPNonce.attrMap)
+
+        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/core.css")">
+        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/iconfont.css")">
+        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/flag-icon.min.css")">
+        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/style.css")">
+
         <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/main.css")">
-            <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-            <!--[if lt IE 9]>
-            <script @{CSPNonce.attr} src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script @{CSPNonce.attr} src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-            <![endif]-->
     </head>
+
+
     <body>
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="@controllers.routes.ApplicationController.index">Malabar.Online</a>
 
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="@controllers.routes.ApplicationController.index">@messages("home")</a>
-                        <a class="nav-item nav-link" href="@controllers.routes.ApplicationController.index">@messages("about")</a>
-                    </div>
-                </div>
 
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup2">
-                    <div class="navbar-nav">
-                        @user.map { u =>
-                        <a class="nav-link" href="@controllers.routes.ApplicationController.index">@u.name</a>
-                        @if(u.loginInfo.providerID == com.mohiva.play.silhouette.impl.providers.CredentialsProvider.ID) {
-                        <a class="nav-item nav-link" href="@controllers.routes.ChangePasswordController.view">@messages("change.password")</a>
-                        }
-                        <a class="nav-item nav-link" href="@controllers.routes.ApplicationController.signOut">@messages("sign.out")</a>
-                        }.getOrElse {
-                        <a class="nav-item nav-link" href="@controllers.routes.SignInController.view">@messages("sign.in")</a>
-                        <a class="nav-item nav-link" href="@controllers.routes.SignUpController.view">@messages("sign.up")</a>
-                        }
-                    </div>
-                </div>
+        <div class="main-wrapper">
 
-            </nav>
-        </header>
-        <main class="container">
-            <div class="starter-template row">
-                @request.flash.get("error").map { msg =>
-                    <div class="col-md-6 col-md-offset-3 alert alert-danger">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>@messages("error")</strong> @msg
+
+                <!-- partial:partials/_navbar.html -->
+            <div class="horizontal-menu">
+                <nav class="navbar top-navbar">
+                    <div class="container">
+                        <div class="navbar-content">
+                            <a href="#" class="navbar-brand">
+                                Malabar<span>Online</span>
+                            </a>
+                        </div>
                     </div>
-                }
-                @request.flash.get("info").map { msg =>
-                    <div class="col-md-6 col-md-offset-3 alert alert-info">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>@messages("info")</strong> @msg
+                </nav>
+                <nav class="bottom-navbar">
+                    <div class="container">
+                        <ul class="nav page-navigation">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="home-icon" data-feather="box"></i>
+                                    <span class="menu-title">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="link-icon" data-feather="smile"></i>
+                                    <span class="menu-title">Icons</span>
+                                    <i class="link-arrow"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                }
-                @request.flash.get("success").map { msg =>
-                    <div class="col-md-6 col-md-offset-3 alert alert-success">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>@messages("success")</strong> @msg
-                    </div>
-                }
-                @content
+                </nav>
             </div>
-        </main>
-        @webJarsUtil.locate("jquery.min.js").script(CSPNonce.attrMap)
-        @webJarsUtil.locate("bootstrap.min.js").script(CSPNonce.attrMap)
-        <script @{CSPNonce.attr} src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
-        <script @{CSPNonce.attr} src="@assets.path("javascripts/zxcvbnShim.js")"></script>
+                <!-- partial -->
+
+
+            <div class="page-wrapper">
+
+                <div class="page-content">
+
+                    <nav class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Special pages</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Faq</li>
+                        </ol>
+                    </nav>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Frequently Asked Questions</h6>
+                                    <div id="accordion" class="accordion" role="tablist">
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingOne">
+                                                <h6 class="mb-0">
+                                                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Why is the moon sometimes out during the day?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingThree">
+                                                <h6 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        Will we ever discover aliens?
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    card body
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- partial:../../partials/_footer.html -->
+                <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <p class="text-muted text-center text-md-left">Copyright © 2021 <a href="https://www.nobleui.com" target="_blank">NobleUI</a>. All rights reserved</p>
+                    <p class="text-muted text-center text-md-left mb-0 d-none d-md-block">Handcrafted With <i class="mb-1 text-primary ml-1 icon-small" data-feather="heart"></i></p>
+                </footer>
+                    <!-- partial -->
+
+            </div>
+        </div>
+
+
+        <script @{CSPNonce.attr} src="@assets.path("javascripts/core.js")"></script>
+        <script @{CSPNonce.attr} src="@assets.path("javascripts/feather.min.js")"></script>
+        <script @{CSPNonce.attr} src="@assets.path("javascripts/template.js")"></script>
+
     </body>
 </html>
