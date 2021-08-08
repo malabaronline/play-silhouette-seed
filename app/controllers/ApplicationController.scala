@@ -23,7 +23,7 @@ class ApplicationController @Inject() (
    * @return The result to display.
    */
   def index: Action[AnyContent] = UserAwareAction { implicit request: UserAwareRequest[EnvType, AnyContent] =>
-    Ok(home(request.identity, None))
+    Ok(home(request.identity))
   }
 
   /**

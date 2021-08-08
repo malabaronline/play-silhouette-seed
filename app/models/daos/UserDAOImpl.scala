@@ -1,6 +1,7 @@
 package models.daos
 
 import com.mohiva.play.silhouette.api.LoginInfo
+import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
 import models.User
 import models.daos.UserDAOImpl._
 import models.errors.RedisInsertFailedException
@@ -33,8 +34,12 @@ class UserDAOImpl @Inject() (redis: Redis) extends UserDAO {
    * Finds a user by its user ID.
    */
   def find(userID: UUID): Future[Option[User]] = {
-    //TODO Change providerID = "", providerKey = ""
-    getUserOpt(userID, LoginInfo(providerID = "", providerKey = ""))
+    for {
+      userOpt <- redis.hGetAll(userKey(userID)) map {
+        case Some(userMap) => Some(User(userID, userMap, LoginInfo(CredentialsProvider.ID, userMap.getOrElse("email", ""))))
+        case None => None
+      }
+    } yield userOpt
   }
 
   private def getUserOpt(userID: UUID, loginInfo: LoginInfo): Future[Option[User]] = {
@@ -52,6 +57,7 @@ class UserDAOImpl @Inject() (redis: Redis) extends UserDAO {
   def save(user: User): Future[User] = {
     (for {
       _ <- redis.hmSet(userKey(user.userID), user.toMap)
+      _ <- redis.set(userLoginInfoKey(user.loginInfo), user.userID.toString)
       userOpt <- getUserOpt(user.userID, user.loginInfo)
     } yield userOpt).flatMap {
       case Some(value) => Future.successful(value)

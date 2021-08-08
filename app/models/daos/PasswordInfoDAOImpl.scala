@@ -51,18 +51,14 @@ object PasswordInfoDAOImpl {
     PasswordInfo(
       hasher = map.getOrElse("hasher", ""),
       password = map.getOrElse("password", ""),
-      salt = map.get("salt") match {
-        case Some(value) if value.nonEmpty => Some(value)
-        case _ => None
-      }
+      salt = map.get("salt")
     )
   }
 
   def fromPasswordInfo(passwordInfo: PasswordInfo): Map[String, String] = {
     Map(
       "hasher" -> passwordInfo.hasher,
-      "password" -> passwordInfo.password,
-      "salt" -> passwordInfo.salt.getOrElse("")
-    )
+      "password" -> passwordInfo.password
+    ) ++ passwordInfo.salt.map(s => "salt" -> s)
   }
 }

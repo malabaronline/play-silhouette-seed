@@ -5,7 +5,7 @@
 @import controllers.AssetsFinder
 @import views.html.helper._
 
-@(title: String, user: Option[models.User] = None)(content: Html)(implicit request: RequestHeader, messages: Messages, assets: AssetsFinder, webJarsUtil: WebJarsUtil)
+@(title: String, userOpt: Option[models.User] = None)(content: Html)(implicit request: RequestHeader, messages: Messages, assets: AssetsFinder, webJarsUtil: WebJarsUtil)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +17,6 @@
         <link rel="shortcut icon" type="image/png" href="@assets.path("images/favicon.png")">
         <title>@title</title>
 
-        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/core.css")">
-        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/iconfont.css")">
-        <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/flag-icon.min.css")">
         <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/style.css")">
 
         <link @{CSPNonce.attr} rel="stylesheet" href="@assets.path("styles/main.css")">
@@ -31,189 +28,175 @@
 
         <div class="main-wrapper">
 
+                <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <a href="#" class="sidebar-brand">
 
-                <!-- partial:partials/_navbar.html -->
-            <div class="horizontal-menu">
-                <nav class="navbar top-navbar">
-                    <div class="container">
-                        <div class="navbar-content">
-                            <a href="#" class="navbar-brand">
-                                Malabar<span>Online</span>
+                    </a>
+                    <div class="sidebar-toggler not-active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="sidebar-body">
+                    <ul class="nav">
+                        <li class="nav-item nav-category">Main</li>
+                        <li class="nav-item">
+                            <a href="@controllers.routes.ApplicationController.index()" class="nav-link">
+                                <i class="link-icon" data-feather="box"></i>
+                                <span class="link-title">Dashboard</span>
                             </a>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="bottom-navbar">
-                    <div class="container">
-                        <ul class="nav page-navigation">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="home-icon" data-feather="box"></i>
-                                    <span class="menu-title">Home</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="link-icon" data-feather="smile"></i>
-                                    <span class="menu-title">Icons</span>
-                                    <i class="link-arrow"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-                <!-- partial -->
+                        </li>
+                        <li class="nav-item nav-category">Profile</li>
+                        @userOpt.map { user =>
+                        <li class="nav-item">
+                            <a href="@controllers.routes.UserController.profile()" class="nav-link">
+                                <i class="link-icon" data-feather="user"></i>
+                                <span class="link-title">My profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="link-icon" data-feather="box"></i>
+                                <span class="link-title">Wallet</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
+                                <i class="link-icon" data-feather="mail"></i>
+                                <span class="link-title">Settings</span>
+                                <i class="link-arrow" data-feather="chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="emails">
+                                <ul class="nav sub-menu">
+                                    <li class="nav-item">
 
+                                        <a class="nav-item nav-link" href="">@messages("change.password")</a>
+                                        <a href="@controllers.routes.ChangePasswordController.view" class="nav-link">@messages("change.password")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">Preferences</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">Settings</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        }.getOrElse {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary btn-icon-text" href="@controllers.routes.SignInController.view">
+                                    <i class="btn-icon-prepend" data-feather="log-in"></i>
+                                    @messages("sign.in")
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+                <!-- partial -->
 
             <div class="page-wrapper">
 
-                <div class="page-content">
+                    <!-- partial:../../partials/_navbar.html -->
+                <nav class="navbar">
+                    <a href="#" class="sidebar-toggler">
+                        <i data-feather="menu"></i>
+                    </a>
+                    <div class="navbar-content">
 
-                    <nav class="page-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Special pages</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Faq</li>
-                        </ol>
-                    </nav>
+                        <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="@controllers.routes.ApplicationController.index"
+                            class="noble-ui-logo d-inline align-content-center">Malabar <span> Online</span></a>
+                        </li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            @userOpt.map { user =>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title">Frequently Asked Questions</h6>
-                                    <div id="accordion" class="accordion" role="tablist">
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingOne">
-                                                <h6 class="mb-0">
-                                                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Why is the moon sometimes out during the day?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                                </div>
-                                            </div>
+                            <li class="nav-item dropdown nav-profile">
+
+                                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="@user.avatarURL.getOrElse(assets.path("images/silhouette.png"))" alt="profile">
+                                    <span class="font-weight-medium ml-1 mr-1 d-none d-md-inline-block">@user.name</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                    <div class="dropdown-header d-flex flex-column align-items-center">
+                                        <div class="figure mb-3">
+                                            <img src="@user.avatarURL.getOrElse(assets.path("images/silhouette.png"))" alt="">
                                         </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h6 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Will we ever discover aliens?
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    card body
-                                                </div>
-                                            </div>
+                                        <div class="info text-center">
+                                            <p class="name font-weight-bold mb-0">@user.name</p>
+                                            <p class="email text-muted mb-3">@user.email</p>
                                         </div>
                                     </div>
+                                    <div class="dropdown-body">
+                                        <ul class="profile-nav p-0 pt-3">
+                                            <li class="nav-item">
+                                                <a href="@controllers.routes.UserController.profile()" class="nav-link">
+                                                    <i data-feather="user"></i>
+                                                    <span>Profile</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="@controllers.routes.ApplicationController.signOut" class="nav-link">
+                                                    <i data-feather="log-out"></i>
+                                                    <span>@messages("sign.out")</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+
+                            }.getOrElse {
+
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary btn-icon-text" href="@controllers.routes.SignUpController.view">
+                                    <i class="btn-icon-prepend" data-feather="check-square"></i>
+                                    @messages("sign.up")
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-icon-text" href="@controllers.routes.SignInController.view">
+                                    <i class="btn-icon-prepend" data-feather="log-in"></i>
+                                    @messages("sign.in")
+                                </a>
+                            </li>
+                            }
+
+
+                        </ul>
                     </div>
+                </nav>
+                    <!-- partial -->
+
+                <div class="page-content">
+                    <div class="starter-template row">
+                        @request.flash.get("error").map { msg =>
+                            <div class="col-md-6 col-md-offset-3 alert alert-danger">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>@messages("error")</strong> @msg
+                            </div>
+                        }
+                        @request.flash.get("info").map { msg =>
+                            <div class="col-md-6 col-md-offset-3 alert alert-info">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>@messages("info")</strong> @msg
+                            </div>
+                        }
+                        @request.flash.get("success").map { msg =>
+                            <div class="col-md-6 col-md-offset-3 alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>@messages("success")</strong> @msg
+                            </div>
+                        }
+                    </div>
+
+                    @content
+
                 </div>
 
                     <!-- partial:../../partials/_footer.html -->
@@ -225,6 +208,7 @@
 
             </div>
         </div>
+
 
 
         <script @{CSPNonce.attr} src="@assets.path("javascripts/core.js")"></script>

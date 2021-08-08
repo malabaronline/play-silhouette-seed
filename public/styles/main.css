@@ -1,0 +1,12 @@
+.brand {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity .5s ease;
+    transition: opacity .5s ease;
+    font-weight: 900;
+    font-size: 25px;
+    letter-spacing: -1px;
+    color: #031a61; }
+.brand span {
+    color: #727cf5;
+    font-weight: 300; }
