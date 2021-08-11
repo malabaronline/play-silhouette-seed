@@ -1,0 +1,181 @@
+@import play.api.i18n.Messages
+@import play.api.mvc.RequestHeader
+@import controllers.AssetsFinder
+@import services.cardano.wallet.CardanoWallet
+
+@this()(implicit  assets: AssetsFinder)
+@(user: models.User, cardanoWallet:CardanoWallet)(implicit request: RequestHeader, messages: Messages)
+
+@implicitFieldConstructor = @{
+    b4.vertical.fieldConstructor()
+}
+
+@main(messages("home.title"), Some(user)) {
+
+
+        <div class="row grid-margin">
+            <div class="d-md-block col-md-4 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-center text-uppercase text-muted font-weight-light mt-3 mb-3">Total ADA Balance</p>
+                        <h3 class="text-center mb-3">₳ 0.0132</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        @*Wallet*@
+        <div class="row grid-margin">
+            <div class="col-12">
+
+                <div class="card rounded">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <span class="badge badge-primary">₳ 0.0132</span>
+                                    My private wallet 1
+                                </h5>
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="row">
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/jeune-fille-perle-vermeer.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">മലയാള മനോരമ.</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary btn-icon-text">
+                                                    <i class="btn-icon-prepend" data-feather="check-square"></i>
+                                                    Button with Icon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/american-gothic-grant-wood.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/portrait-adele-klimt.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">A_asset_name_with_maximum_length</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">A_asset_name_with_maximum_length</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">A_asset_name_with_maximum_length</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.nobleui.com/html/template/assets/images/placeholder.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.nobleui.com/html/template/assets/images/placeholder.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1200px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/jeune-fille-perle-vermeer.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/portrait-adele-klimt.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                    @*asset*@
+                                    <div class="d-md-inline-block col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 grid-margin">
+                                        <div class="card">
+                                            <img src="https://www.kazoart.com/blog/wp-content/uploads/2017/05/american-gothic-grant-wood.jpg" class="card-img-top" alt="...">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex post-actions">
+                                    <a href="#" class="d-flex align-items-center btn btn-primary mr-4">
+                                        <p class="d-md-block">details</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card rounded">
+                    <div class="card-header"><h5 class="card-title mb-0">Primary card title <span class="badge badge-primary">₳ 0.0132</span></h5></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex post-actions">
+                            <a href="#" class="d-flex align-items-center btn btn-primary mr-4">
+                                <p class="d-md-block">details</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+}

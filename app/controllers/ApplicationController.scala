@@ -1,8 +1,13 @@
 package controllers
 
+import actors.MyWebSocketActor
+import akka.actor.ActorSystem
+import akka.stream.Materializer
 import com.mohiva.play.silhouette.api.LogoutEvent
 import com.mohiva.play.silhouette.api.actions._
 import com.mohiva.play.silhouette.impl.providers.GoogleTotpInfo
+import play.api.libs.streams.ActorFlow
+
 import javax.inject.Inject
 import play.api.mvc._
 import utils.route.Calls
@@ -15,7 +20,7 @@ import scala.concurrent.ExecutionContext
 class ApplicationController @Inject() (
   scc: SilhouetteControllerComponents,
   home: views.html.home
-)(implicit ex: ExecutionContext) extends SilhouetteController(scc) {
+)(implicit ex: ExecutionContext, system: ActorSystem, mat: Materializer) extends SilhouetteController(scc) {
 
   /**
    * Handles the index action.
@@ -24,6 +29,12 @@ class ApplicationController @Inject() (
    */
   def index: Action[AnyContent] = UserAwareAction { implicit request: UserAwareRequest[EnvType, AnyContent] =>
     Ok(home(request.identity))
+  }
+
+  def socket: WebSocket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      MyWebSocketActor.props(out)
+    }
   }
 
   /**

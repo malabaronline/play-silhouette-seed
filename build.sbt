@@ -29,6 +29,7 @@ libraryDependencies ++= Seq(
   "com.enragedginger" %% "akka-quartz-scheduler" % "1.8.3-akka-2.6.x",
   "com.adrianhurt" %% "play-bootstrap" % "1.5.1-P27-B4",
   "com.mohiva" %% "play-silhouette-testkit" % "6.1.1" % "test",
+  "solutions.iog" %% "psg-cardano-wallet-api" % "0.2.4",
   specs2 % Test,
   ehcache,
   guice,

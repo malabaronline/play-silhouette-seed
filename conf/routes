@@ -35,6 +35,11 @@ GET         /auth/account/activate/:token         controllers.ActivateAccountCon
 
 GET         /profile         controllers.UserController.profile
 
+GET         /wallets/create         controllers.WalletController.createWalletPage
+POST        /wallets/create         controllers.WalletController.create
+POST        /wallets/addReadOnly    controllers.WalletController.addReadOnly
+GET         /wallets                controllers.WalletController.listWallets
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.versioned(file)
 ->          /webjars                         webjars.Routes

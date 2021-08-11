@@ -1,0 +1,29 @@
+@import controllers.AssetsFinder
+@import forms.{AddReadOnlyWalletForm, CreateWalletForm}
+@import play.api.data.Form
+@import play.api.i18n.Messages
+@import play.api.mvc.RequestHeader
+
+@this()(implicit  assets: AssetsFinder)
+@(user: models.User, createWalletFormData: Form[CreateWalletForm.Data], addReadOnlyWalletForm: Form[AddReadOnlyWalletForm.Data])(implicit request: RequestHeader, messages: Messages)
+
+@main(messages("sign.in.title"), Some(user)) {
+
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Basic Form</h6>
+                @helper.form(action = controllers.routes.WalletController.create(), Symbol("class") -> "form-sample") {
+                    @helper.CSRF.formField
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Wallet Name</label>
+                        <input type="text" class="form-control" id="walletName1" autocomplete="off" placeholder="myWallet">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                }
+            </div>
+        </div>
+    </div>
+
+}

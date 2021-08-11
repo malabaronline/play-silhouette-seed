@@ -1,11 +1,11 @@
 @import play.api.data.Form
 @import play.api.i18n.Messages
 @import play.api.mvc.RequestHeader
-@import org.webjars.play.WebJarsUtil
+
 @import controllers.AssetsFinder
 @import forms.TotpRecoveryForm.Data
 
-@this()(implicit webJarsUtil: WebJarsUtil, assets: AssetsFinder)
+@this()(implicit  assets: AssetsFinder)
 @(totpRecoveryForm: Form[Data])(implicit request: RequestHeader, messages: Messages)
 
     @implicitFieldConstructor = @{
